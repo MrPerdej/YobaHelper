@@ -14,7 +14,7 @@ What is WM-IT?
 WM-IT is a WM simulation for a Linux terminal or TTY. Basically WM-IT is created for people who just installed the OS, but forgot to install WM.
 How to install?
 1. Download the git package.
-2. Write to TTY or git clone terminal (link to WM-IT in github)
+2. Write down: git clone https://github.com/CowerDawn/WM-IT
 3. Write: chmod +x WM-IT.sh
 4. And finally launch: ./WM-IT.sh
 
