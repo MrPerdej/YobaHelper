@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 WORKSPACES=("1" "2" "3" "4" "5" "6" "7" "8" "9")
 CURRENT_WORKSPACE="1"
 PROGRAMS=()
@@ -24,7 +23,7 @@ function draw_wallpaper() {
 
 function draw_menu() {
     echo -e "\e[40m\e[37m"
-    echo -e "Workspace: $CURRENT_WORKSPACE | Time: $(date +'%H:%M:%S') | Commands: Super+1-9, Super+d, Super+q, Super+Enter, Super+Shift, Super+-, install, remove, help\e[0m"
+    echo -e "Workspace: $CURRENT_WORKSPACE | Time: $(date +'%H:%M:%S') | Commands: Super+1-9, Super+d, Super+q, Super+Enter, Super+-, Super+b, Super+m, install, remove, help\e[0m"
 }
 
 function switch_workspace() {
@@ -57,18 +56,80 @@ function close_program() {
     echo "Program $PROGRAM not found."
 }
 
+function detect_package_manager() {
+    if [ -f /etc/debian_version ]; then
+        echo "apt"
+    elif [ -f /etc/arch-release ]; then
+        echo "pacman"
+    elif [ -f /etc/fedora-release ]; then
+        echo "dnf"
+    elif [ -f /etc/redhat-release ]; then
+        echo "yum"
+    elif [ -f /etc/SuSE-release ]; then
+        echo "zypper"
+    else
+        echo "unknown"
+    fi
+}
+
 function install_package() {
     PACKAGE=$1
-    echo "Installing $PACKAGE..."
-    sudo pacman -S $PACKAGE
-    echo "$PACKAGE installed."
+    PM=$(detect_package_manager)
+    case $PM in
+        "apt")
+            echo "Installing $PACKAGE using apt..."
+            sudo apt install -y $PACKAGE
+            ;;
+        "pacman")
+            echo "Installing $PACKAGE using pacman..."
+            sudo pacman -S --noconfirm $PACKAGE
+            ;;
+        "dnf")
+            echo "Installing $PACKAGE using dnf..."
+            sudo dnf install -y $PACKAGE
+            ;;
+        "yum")
+            echo "Installing $PACKAGE using yum..."
+            sudo yum install -y $PACKAGE
+            ;;
+        "zypper")
+            echo "Installing $PACKAGE using zypper..."
+            sudo zypper install -y $PACKAGE
+            ;;
+        *)
+            echo "Unsupported package manager. Cannot install $PACKAGE."
+            ;;
+    esac
 }
 
 function remove_package() {
     PACKAGE=$1
-    echo "Removing $PACKAGE..."
-    sudo pacman -R $PACKAGE
-    echo "$PACKAGE removed."
+    PM=$(detect_package_manager)
+    case $PM in
+        "apt")
+            echo "Removing $PACKAGE using apt..."
+            sudo apt remove -y $PACKAGE
+            ;;
+        "pacman")
+            echo "Removing $PACKAGE using pacman..."
+            sudo pacman -R --noconfirm $PACKAGE
+            ;;
+        "dnf")
+            echo "Removing $PACKAGE using dnf..."
+            sudo dnf remove -y $PACKAGE
+            ;;
+        "yum")
+            echo "Removing $PACKAGE using yum..."
+            sudo yum remove -y $PACKAGE
+            ;;
+        "zypper")
+            echo "Removing $PACKAGE using zypper..."
+            sudo zypper remove -y $PACKAGE
+            ;;
+        *)
+            echo "Unsupported package manager. Cannot remove $PACKAGE."
+            ;;
+    esac
 }
 
 function show_help() {
@@ -77,8 +138,9 @@ function show_help() {
     echo "Super + d: Open program"
     echo "Super + q: Close program"
     echo "Super + Enter: Open command line"
-    echo "Super + Shift: Exit WM-IT"
     echo "Super + -: Shutdown PC"
+    echo "Super + b: Reboot PC"
+    echo "Super + m: Start X server"
     echo "install [package]: Install package"
     echo "remove [package]: Remove package"
     echo "help: Show this help"
@@ -100,6 +162,21 @@ function shutdown_pc() {
     else
         echo "Shutdown canceled."
     fi
+}
+
+function reboot_pc() {
+    echo "Reboot PC? (Y/N)"
+    read -rsn1 response
+    if [[ $response == "Y" || $response == "y" ]]; then
+        sudo reboot
+    else
+        echo "Reboot canceled."
+    fi
+}
+
+function start_x_server() {
+    echo "Starting X server with startx..."
+    startx
 }
 
 draw_wallpaper
@@ -142,6 +219,12 @@ while true; do
             ;;
         "-")
             shutdown_pc
+            ;;
+        "b")
+            reboot_pc
+            ;;
+        "m")
+            start_x_server
             ;;
         "S")
             echo "Exiting WM-IT..."
