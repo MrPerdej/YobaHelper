@@ -1,4 +1,4 @@
-SCRIPT = WM-IT
+SCRIPT = yoba
 INSTALL_PATH = /usr/bin
 
 install:
