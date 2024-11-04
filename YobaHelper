@@ -113,7 +113,7 @@ function troll() {
 
     echo "Troll activated! Opening threat windows..."
     for i in {1..5}; do
-        xmessage -center "WARNING: Your computer is infected with viruses!" &
+        xmessage -center "We are viruses, go in fortnite)))" &
     done
 }
 
