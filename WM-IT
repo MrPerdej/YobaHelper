@@ -11,7 +11,7 @@ function draw_wallpaper() {
     echo "                                                                             "
     echo "                                                                             "
     echo "  _    _   _____   __  Welcome to WM-IT!                                     "
-    echo " | |  | | |_   _| |  | Thank you for downloading our program!                "
+    echo " | |  | | |_   _| |  | WM-IT the best!                                       "
     echo " | |__| |   | |   |  | WM-IT github:                                         "
     echo " |  __  |   | |   |__| https://github.com/CowerDawn/WM-IT                    "
     echo " | |  | |  _| |_   __  Creators: CowerDawn,S0siskaKiller                     "
@@ -96,6 +96,10 @@ function install_package() {
             echo "Installing $PACKAGE using zypper..."
             sudo zypper install -y $PACKAGE
             ;;
+       "pkg")
+	       echo "Installing $PACKAGE using pkg..."
+	       sudo pkg install $PACKAGE
+	       ;;
         *)
             echo "Unsupported package manager. Cannot install $PACKAGE."
             ;;
@@ -126,6 +130,10 @@ function remove_package() {
             echo "Removing $PACKAGE using zypper..."
             sudo zypper remove -y $PACKAGE
             ;;
+       "pkg")
+	       echo "Removing $PACKAGE using pkg..."
+	       sudo pkg delete $PACKAGE
+	       ;;
         *)
             echo "Unsupported package manager. Cannot remove $PACKAGE."
             ;;
