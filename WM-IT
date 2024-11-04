@@ -11,7 +11,7 @@ function draw_wallpaper() {
     echo "                                                                             "
     echo "                                                                             "
     echo "  _    _   _____   __  Welcome to WM-IT!                                     "
-    echo " | |  | | |_   _| |  | WM-IT the best!                                       "
+    echo " | |  | | |_   _| |  | Thank you for downloading our program!                "
     echo " | |__| |   | |   |  | WM-IT github:                                         "
     echo " |  __  |   | |   |__| https://github.com/CowerDawn/WM-IT                    "
     echo " | |  | |  _| |_   __  Creators: CowerDawn,S0siskaKiller                     "
