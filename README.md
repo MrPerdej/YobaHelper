@@ -27,4 +27,4 @@ WM-IT is completely made for GNU/Linux systems. Mainly for Arch Linux and the li
 
 WM-IT stands for Window Manager For TTY.
 
-Creators: (CowerDawn), S0siskaKiller
+Creators: CowerDawn, S0siskaKiller
