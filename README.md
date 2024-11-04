@@ -17,8 +17,9 @@ WM-IT is a WM simulation for a Linux terminal or TTY. Basically WM-IT is created
 How to install?
 1. Download the git package.
 2. Write down: git clone https://github.com/CowerDawn/WM-IT
-3. Write: cd WM-IT $$ sudo make install
-4. And finally launch: WM-IT
+3. Write: cd WM-IT
+4. sudo make install
+5. And finally launch: WM-IT
 
 What kind of license? WM-IT is licensed under GPL and is a fully GNU program.
 See COPYING.txt for the GNU GENERAL PUBLIC LICENSE
