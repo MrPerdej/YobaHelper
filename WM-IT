@@ -23,7 +23,7 @@ function draw_wallpaper() {
 
 function draw_menu() {
     echo -e "\e[40m\e[37m"
-    echo -e "Workspace: $CURRENT_WORKSPACE | Time: $(date +'%H:%M:%S') | Commands:1-9,D - dmenu, Q - closes the program, Enter - open some programs,- - shutdown ur pc,I - install some software, R - remove some software, H - help, s - exit from WM-IT. (more in help)\e[0m"
+    echo -e "Workspace: $CURRENT_WORKSPACE | Time: $(date +'%H:%M:%S') | Commands:1-9,E- shell, Q - closes the program, Enter - open some programs,- - shutdown ur pc,I - install some software, R - remove some software, H - help, s - exit from WM-IT. (more in help)\e[0m"
 }
 
 function switch_workspace() {
@@ -112,7 +112,7 @@ function remove_package() {
             ;;
         "pacman")
             echo "Removing $PACKAGE using pacman..."
-            sudo pacman -R --noconfirm $PACKAGE
+            sudo pacman -Rcs --noconfirm $PACKAGE
             ;;
         "dnf")
             echo "Removing $PACKAGE using dnf..."
@@ -180,6 +180,18 @@ function start_x_server() {
     echo "Starting X server with startx..."
     startx
 }
+function shell() {
+	while true; do
+	read -p " > " SHELL
+	eval "$SHELL"
+    	if [[ "$SHELL" == "exitshell" ]]; then
+        echo "exit from shell"
+        draw_wallpaper
+	draw_menu
+	break
+	fi
+done
+}
 
 draw_wallpaper
 draw_menu
@@ -235,6 +247,9 @@ while true; do
             echo "Exiting WM-IT..."
             exit 0
             ;;
+	"e")
+		echo "To exit the shell, type the command “exitshell”"
+		shell
     esac
     draw_menu
 done
