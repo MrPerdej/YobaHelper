@@ -14,7 +14,7 @@ function draw_wallpaper() {
     echo " | |  | | |_   _| |  | WM-IT the best!                                       "
     echo " | |__| |   | |   |  | WM-IT github:                                         "
     echo " |  __  |   | |   |__| https://github.com/CowerDawn/WM-IT                    "
-    echo " | |  | |  _| |_   __  Creater: CowerDawn                                    "
+    echo " | |  | |  _| |_   __  Creators: CowerDawn,S0siskaKiller                     "
     echo " |_|  |_| |_____| |__| WM-IT - This is a Windows manager inside the terminal!"
     echo "                                                                             "
     echo "                                                                             "
@@ -23,7 +23,7 @@ function draw_wallpaper() {
 
 function draw_menu() {
     echo -e "\e[40m\e[37m"
-    echo -e "Workspace: $CURRENT_WORKSPACE | Time: $(date +'%H:%M:%S') | Commands: Super+1-9, Super+d, Super+q, Super+Enter, Super+-, Super+b, Super+m, install, remove, help\e[0m"
+    echo -e "Workspace: $CURRENT_WORKSPACE | Time: $(date +'%H:%M:%S') | Commands:1-9,D - dmenu, Q - closes the program, Enter - open some programs,- - shutdown ur pc,I - install some software, R - remove some software, H - help, s - exit from WM-IT. (more in help)\e[0m"
 }
 
 function switch_workspace() {
@@ -143,7 +143,9 @@ function show_help() {
     echo "Super + m: Start X server"
     echo "install [package]: Install package"
     echo "remove [package]: Remove package"
+    echo "C - clear the screen"
     echo "help: Show this help"
+    
 }
 
 function open_command_line() {
@@ -194,9 +196,9 @@ while true; do
             open_program $PROGRAM
             ;;
         "q")
-            echo "Enter program name to close:"
-            read PROGRAM
-            close_program $PROGRAM
+            read -p "Enter program name to close:" answer
+	    killall "$answer"
+	    # I hate Jello
             ;;
         "i")
             echo "Enter package name to install:"
@@ -226,7 +228,10 @@ while true; do
         "m")
             start_x_server
             ;;
-        "S")
+    "c")
+	    clear 
+	    ;;
+        "s")
             echo "Exiting WM-IT..."
             exit 0
             ;;
