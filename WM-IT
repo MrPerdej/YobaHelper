@@ -96,10 +96,18 @@ function install_package() {
             echo "Installing $PACKAGE using zypper..."
             sudo zypper install -y $PACKAGE
             ;;
+    "pkg_add")
+	    echo "Installing $PACKAGE using pkg_add..."
+    doas pkg_add $PACKAGE
+    ;;
+    "pkgin")
+	    echo "Installing $PACKAGE using pkgin..."
+	    sudo pkgin install $PACKAGE
+	    ;;
        "pkg")
 	       echo "Installing $PACKAGE using pkg..."
 	       sudo pkg install $PACKAGE
-	       ;;
+	         ;;
         *)
             echo "Unsupported package manager. Cannot install $PACKAGE."
             ;;
@@ -133,6 +141,10 @@ function remove_package() {
        "pkg")
 	       echo "Removing $PACKAGE using pkg..."
 	       sudo pkg delete $PACKAGE
+	       ;;
+       "pkg_delete")
+	       echo "Removing $PACKAGE using pkg_delete..."
+               doas pkg_delete $PACKAGE
 	       ;;
         *)
             echo "Unsupported package manager. Cannot remove $PACKAGE."
