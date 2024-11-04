@@ -1,0 +1,153 @@
+#!/bin/bash
+
+WORKSPACES=("1" "2" "3" "4" "5" "6" "7" "8" "9")
+CURRENT_WORKSPACE="1"
+
+function draw_wallpaper() {
+    clear
+    echo -e "\e[40m\e[37m"
+    echo "              @@@@@@@@@@@@              "
+    echo "         .@@@@            @@@@.         "
+    echo "       @@@-     --.          :@@@       "
+    echo "     @@@    *    .      #@      @@@     "
+    echo "    @@         .                  @@    "
+    echo "  @@@                   .     .    @@@  "
+    echo " :@@ @:@@=   @@@@.         @@@.     @@: "
+    echo " @@   .  .@@@@@@@*      .@@@-@@@@@   @@ "
+    echo " @     .                   +.     .   @ "
+    echo "@@      .#+ + .-@%           #.  .    @@"
+    echo "@@         @@                  @.     @@"
+    echo "@@           @ @:=+..        =@@@     @@"
+    echo "@@           @@@  #    @ *  @@@ #     @@"
+    echo " @            @@@@@@@@@@@@@@@@@       @ "
+    echo " @@             @@@@@@@@@@@@         @@ "
+    echo " :@@                                @@= "
+    echo "  @@@       @        -:*     @     @@@  "
+    echo "   .@@      ##.              @    @@.   "
+    echo "     @@@      @+@=:         @   @@@     "
+    echo "       @@@      . :@#.#@@-    @@@       "
+    echo "         =@@@@            @@@@+         "
+    echo "             :@@@@@@@@@@@@:             "
+    echo -e "\e[0m"      
+}
+
+function draw_menu() {
+    echo -e "\e[40m\e[37m"
+    echo -e ""
+}
+
+function switch_workspace() {
+    CURRENT_WORKSPACE=$1
+    draw_wallpaper
+    draw_menu
+}
+
+function show_pumba() {
+    echo "PUMBA: AKUNA MATATA YOYOYOY"
+}
+
+function show_mr_beast() {
+    echo "Mr. Beast"
+    subscribe_messages=(
+        "Don't forget to subscribe to MrBeast on YouTube!"
+        "Hit that subscribe button for more amazing content!"
+        "Subscribe now and join the Beast Squad!"
+        "Subscribe for daily doses of positivity and entertainment!"
+        "Subscribe and help us reach 100 million subscribers!"
+    )
+    random_message=${subscribe_messages[$RANDOM % ${#subscribe_messages[@]}]}
+    echo $random_message
+}
+
+function open_program() {
+    echo "Enter program name to open:"
+    read PROGRAM
+    $PROGRAM &
+    echo "Opening $PROGRAM..."
+}
+
+function yoba() {
+    ip_address=$(hostname -I | awk '{print $1}')
+    mac_address=$(ip link show | grep -Po 'ether \K[^ ]*' | head -n 1)
+    user_info=$(whoami)
+    os_info=$(uname -a)
+
+    jokes=(
+        "Why did the user cross the road? To get to the terminal!"
+        "Why do users love their computers? Because they have all their files in one place!"
+        "What do you call a user who always backs up their data? A smart user!"
+        "Why don't users like to play hide and seek? Because they always find their files!"
+        "Why did the user bring a ladder to the computer store? They heard the Wi-Fi was on the roof!"
+        "Your IP address is $ip_address, and your MAC address is $mac_address. Now that's some serious tech info!"
+        "User $user_info is running $os_info. Impressive, right?"
+    )
+    random_joke=${jokes[$RANDOM % ${#jokes[@]}]}
+    echo $random_joke
+}
+
+function mega_yoba() {
+    echo "MegaYoba activated! Shutting down the terminal..."
+    pkill -f "bash $0"
+}
+
+function install_xmessage() {
+    echo "Installing xorg-xmessage..."
+    if command -v pacman &> /dev/null; then
+        sudo pacman -S xorg-xmessage
+    elif command -v apt-get &> /dev/null; then
+        sudo apt-get install xmessage
+    elif command -v yum &> /dev/null; then
+        sudo yum install xmessage
+    elif command -v dnf &> /dev/null; then
+        sudo dnf install xmessage
+    else
+        echo "Unsupported package manager. Please install xorg-xmessage manually."
+    fi
+}
+
+function troll() {
+    if ! command -v xmessage &> /dev/null; then
+        echo "xorg-xmessage is not installed. Installing now..."
+        install_xmessage
+    fi
+
+    echo "Troll activated! Opening threat windows..."
+    for i in {1..5}; do
+        xmessage -center "WARNING: Your computer is infected with viruses!" &
+    done
+}
+
+draw_wallpaper
+draw_menu
+
+while true; do
+    read -rsn1 input
+    case $input in
+        "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9")
+            switch_workspace $input
+            ;;
+        "P" | "p")
+            show_pumba
+            ;;
+        "M" | "m")
+            mega_yoba
+            ;;
+        "D" | "d")
+            open_program
+            ;;
+        "Y" | "y")
+            yoba
+            ;;
+        "W" | "w")
+            show_mr_beast
+            ;;
+        "T" | "t")
+            troll
+            ;;
+        "Q" | "q")
+            echo "Exiting PUMBA-WM..."
+            exit 0
+            ;;
+    esac
+    draw_menu
+done
