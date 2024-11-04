@@ -1,5 +1,4 @@
-#!/bin/sh
-
+#!/bin/bash
 
 WORKSPACES=("1" "2" "3" "4" "5" "6" "7" "8" "9")
 CURRENT_WORKSPACE="1"
@@ -15,7 +14,7 @@ function draw_wallpaper() {
     echo " | |  | | |_   _| |  | WM-IT the best!                                       "
     echo " | |__| |   | |   |  | WM-IT github:                                         "
     echo " |  __  |   | |   |__| https://github.com/CowerDawn/WM-IT                    "
-    echo " | |  | |  _| |_   __  Creators: CowerDawn, S0siskaKiller                    "
+    echo " | |  | |  _| |_   __  Creater: CowerDawn                                    "
     echo " |_|  |_| |_____| |__| WM-IT - This is a Windows manager inside the terminal!"
     echo "                                                                             "
     echo "                                                                             "
@@ -24,7 +23,7 @@ function draw_wallpaper() {
 
 function draw_menu() {
     echo -e "\e[40m\e[37m"
-    echo -e "Workspace: $CURRENT_WORKSPACE | Time: $(date +'%H:%M:%S') | Commands: 1-9,D - dmenu, Q - closes the program, Enter - open some programs,- - shutdown ur pc,I - install some software, R - remove some software, H - help, s - exit from WM-IT\e[0m"
+    echo -e "Workspace: $CURRENT_WORKSPACE | Time: $(date +'%H:%M:%S') | Commands: Super+1-9, Super+d, Super+q, Super+Enter, Super+-, Super+b, Super+m, install, remove, help\e[0m"
 }
 
 function switch_workspace() {
@@ -47,7 +46,7 @@ function close_program() {
     for i in "${!PROGRAMS[@]}"; do
         if [[ "${PROGRAMS[$i]}" == "$PROGRAM" ]]; then
             unset 'PROGRAMS[$i]'
-            killall -f "$PROGRAM"
+            pkill -f "$PROGRAM"
             draw_wallpaper
             draw_menu
             echo "Closed $PROGRAM."
@@ -57,18 +56,80 @@ function close_program() {
     echo "Program $PROGRAM not found."
 }
 
+function detect_package_manager() {
+    if [ -f /etc/debian_version ]; then
+        echo "apt"
+    elif [ -f /etc/arch-release ]; then
+        echo "pacman"
+    elif [ -f /etc/fedora-release ]; then
+        echo "dnf"
+    elif [ -f /etc/redhat-release ]; then
+        echo "yum"
+    elif [ -f /etc/SuSE-release ]; then
+        echo "zypper"
+    else
+        echo "unknown"
+    fi
+}
+
 function install_package() {
     PACKAGE=$1
-    echo "Installing $PACKAGE..."
-    sudo pacman -S $PACKAGE
-    echo "$PACKAGE installed."
+    PM=$(detect_package_manager)
+    case $PM in
+        "apt")
+            echo "Installing $PACKAGE using apt..."
+            sudo apt install -y $PACKAGE
+            ;;
+        "pacman")
+            echo "Installing $PACKAGE using pacman..."
+            sudo pacman -S --noconfirm $PACKAGE
+            ;;
+        "dnf")
+            echo "Installing $PACKAGE using dnf..."
+            sudo dnf install -y $PACKAGE
+            ;;
+        "yum")
+            echo "Installing $PACKAGE using yum..."
+            sudo yum install -y $PACKAGE
+            ;;
+        "zypper")
+            echo "Installing $PACKAGE using zypper..."
+            sudo zypper install -y $PACKAGE
+            ;;
+        *)
+            echo "Unsupported package manager. Cannot install $PACKAGE."
+            ;;
+    esac
 }
 
 function remove_package() {
     PACKAGE=$1
-    echo "Removing $PACKAGE..."
-    sudo pacman -R $PACKAGE
-    echo "$PACKAGE removed."
+    PM=$(detect_package_manager)
+    case $PM in
+        "apt")
+            echo "Removing $PACKAGE using apt..."
+            sudo apt remove -y $PACKAGE
+            ;;
+        "pacman")
+            echo "Removing $PACKAGE using pacman..."
+            sudo pacman -R --noconfirm $PACKAGE
+            ;;
+        "dnf")
+            echo "Removing $PACKAGE using dnf..."
+            sudo dnf remove -y $PACKAGE
+            ;;
+        "yum")
+            echo "Removing $PACKAGE using yum..."
+            sudo yum remove -y $PACKAGE
+            ;;
+        "zypper")
+            echo "Removing $PACKAGE using zypper..."
+            sudo zypper remove -y $PACKAGE
+            ;;
+        *)
+            echo "Unsupported package manager. Cannot remove $PACKAGE."
+            ;;
+    esac
 }
 
 function show_help() {
@@ -77,8 +138,9 @@ function show_help() {
     echo "Super + d: Open program"
     echo "Super + q: Close program"
     echo "Super + Enter: Open command line"
-    echo "Super + Shift: Exit WM-IT"
     echo "Super + -: Shutdown PC"
+    echo "Super + b: Reboot PC"
+    echo "Super + m: Start X server"
     echo "install [package]: Install package"
     echo "remove [package]: Remove package"
     echo "help: Show this help"
@@ -102,6 +164,21 @@ function shutdown_pc() {
     fi
 }
 
+function reboot_pc() {
+    echo "Reboot PC? (Y/N)"
+    read -rsn1 response
+    if [[ $response == "Y" || $response == "y" ]]; then
+        sudo reboot
+    else
+        echo "Reboot canceled."
+    fi
+}
+
+function start_x_server() {
+    echo "Starting X server with startx..."
+    startx
+}
+
 draw_wallpaper
 draw_menu
 
@@ -117,15 +194,14 @@ while true; do
             open_program $PROGRAM
             ;;
         "q")
-            read -p "Enter program name to close:" answer
-            killall  "$answer"
-	    # I hate Jello
+            echo "Enter program name to close:"
+            read PROGRAM
+            close_program $PROGRAM
             ;;
         "i")
             echo "Enter package name to install:"
             read PACKAGE
-
-           install_package $PACKAGE
+            install_package $PACKAGE
             ;;
         "r")
             echo "Enter package name to remove:"
@@ -144,7 +220,13 @@ while true; do
         "-")
             shutdown_pc
             ;;
-        "s")
+        "b")
+            reboot_pc
+            ;;
+        "m")
+            start_x_server
+            ;;
+        "S")
             echo "Exiting WM-IT..."
             exit 0
             ;;
