@@ -1,5 +1,6 @@
 # WM-IT
-![WM-IT](https://github.com/user-attachments/assets/7b154266-9434-4682-9559-038855b96aeb)
+![photo_2024-11-04_14-56-48](https://github.com/user-attachments/assets/031c5fc0-6aa5-49bf-9c20-b7c947ffa418)
+
 
 What is WM-IT? WM-IT is a WM simulation for a Linux terminal or TTY. Basically WM-IT is created for people who just installed the OS, but forgot to install WM.
 
