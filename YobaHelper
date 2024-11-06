@@ -43,20 +43,20 @@ function switch_workspace() {
 }
 
 function show_pumba() {
-    echo "PUMBA: AKUNA MATATA YOYOYOY"
+    echo "PUMBA: you already program in PUMBA, if not, then start with "Hello World!" Here is an example of this program:PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA PUMBA "
 }
 
 function show_mr_beast() {
     echo "Mr. Beast"
     subscribe_messages=(
-        "Don't forget to subscribe to MrBeast on YouTube!"
+        "Don't forget to subscribe to РњРРЎРўР•Р Р—Р’Р•Р Р¬ on YouTube!"
         "Hit that subscribe button for more amazing content!"
         "Subscribe now and join the Beast Squad!"
         "Subscribe for daily doses of positivity and entertainment!"
         "Subscribe and help us reach 100 million subscribers!"
     )
     random_message=${subscribe_messages[$RANDOM % ${#subscribe_messages[@]}]}
-    echo $random_message
+    echo РњРРЎРўР•Р Р—Р’Р•Р Р¬: $random_message
 }
 
 function open_program() {
@@ -73,21 +73,21 @@ function yoba() {
     os_info=$(uname -a)
 
     jokes=(
-        "Why did the user cross the road? To get to the terminal!"
-        "Why do users love their computers? Because they have all their files in one place!"
-        "What do you call a user who always backs up their data? A smart user!"
-        "Why don't users like to play hide and seek? Because they always find their files!"
-        "Why did the user bring a ladder to the computer store? They heard the Wi-Fi was on the roof!"
-        "Your IP address is $ip_address, and your MAC address is $mac_address. Now that's some serious tech info!"
+        "Your fat is too much for you to live a normal life. AND NOW I QUICKLY GOT UP FROM THE CHAIR AND WENT OUTSIDE."
+        "Bro, do you really sit on your PC all day long just to take a walk?"
+        "EZZ GG WP U REALLY L"
+        "I KNOW EVERYTHING ABOUT YOU, AT LEAST YOUR IP AND YOUR 2CH ACCOUNT!"
+        "HEY I'M ALREADY BEHIND YOUR DOOR, OPEN IT FASTER!"
+        "$mac_address. I HAVE MORE! SHOW?"
         "User $user_info is running $os_info. Impressive, right?"
     )
     random_joke=${jokes[$RANDOM % ${#jokes[@]}]}
-    echo $random_joke
+    echo YOBA speak: $random_joke
 }
 
 function mega_yoba() {
     echo "MegaYoba activated! Shutting down the terminal..."
-    pkill -f "bash $0"
+    pkill -f "xorg"
 }
 
 function install_xmessage() {
