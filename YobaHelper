@@ -67,7 +67,6 @@ function open_program() {
 }
 
 function yoba() {
-    ip_address=$(hostname -I | awk '{print $1}')
     mac_address=$(ip link show | grep -Po 'ether \K[^ ]*' | head -n 1)
     user_info=$(whoami)
     os_info=$(uname -a)
