@@ -86,7 +86,7 @@ function yoba() {
 
 function mega_yoba() {
     echo "MegaYoba activated! Shutting down the terminal..."
-    pkill -f "xorg"
+    pkill -f ""
 }
 
 function install_xmessage() {
