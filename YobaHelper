@@ -120,7 +120,7 @@ function download_and_play_meme() {
     local url="https://www.myinstants.com/media/sounds/bu-ispugalsia-ne-boisia.mp3"
     local temp_file="/tmp/bu-ispugalsia-ne-boisia.mp3"
 
-    echo "Скачиваем мем..."
+    echo "БУУ"
     wget -q -O "$temp_file" "$url"
 
     # Проверяем, успешно ли скачался файл
