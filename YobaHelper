@@ -49,14 +49,14 @@ function show_pumba() {
 function show_mr_beast() {
     echo "Mr. Beast"
     subscribe_messages=(
-        "Don't forget to subscribe to РњРРЎРўР•Р Р—Р’Р•Р Р¬ on YouTube!"
+        "Don't forget to subscribe to РњРРЎРўР•Р Р—Р’Р•Р Р¬ on YouTube!"
         "Hit that subscribe button for more amazing content!"
         "Subscribe now and join the Beast Squad!"
         "Subscribe for daily doses of positivity and entertainment!"
         "Subscribe and help us reach 100 million subscribers!"
     )
     random_message=${subscribe_messages[$RANDOM % ${#subscribe_messages[@]}]}
-    echo РњРРЎРўР•Р Р—Р’Р•Р Р¬: $random_message
+    echo РњРРЎРўР•Р Р—Р’Р•Р Р¬: $random_message
 }
 
 function open_program() {
@@ -116,6 +116,30 @@ function troll() {
     done
 }
 
+function download_and_play_meme() {
+    local url="https://www.myinstants.com/media/sounds/bu-ispugalsia-ne-boisia.mp3"
+    local temp_file="/tmp/bu-ispugalsia-ne-boisia.mp3"
+
+    echo "Скачиваем мем..."
+    wget -q -O "$temp_file" "$url"
+
+    # Проверяем, успешно ли скачался файл
+    if [ -f "$temp_file" ]; then
+        echo ""
+        if command -v mpv &> /dev/null; then
+            mpv "$temp_file"
+        elif command -v mplayer &> /dev/null; then
+            mplayer "$temp_file"
+        elif command -v vlc &> /dev/null; then
+            vlc "$temp_file"
+        else
+            echo "БУ."
+        fi
+    else
+        echo "ЕХААААААИ."
+    fi
+}
+
 draw_wallpaper
 draw_menu
 
@@ -146,6 +170,9 @@ while true; do
         "Q" | "q")
             echo "Exiting PUMBA-WM..."
             exit 0
+            ;;
+        "B" | "b")
+            download_and_play_meme
             ;;
     esac
     draw_menu
