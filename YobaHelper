@@ -123,7 +123,6 @@ function download_and_play_meme() {
     echo "БУУ"
     wget -q -O "$temp_file" "$url"
 
-    # Проверяем, успешно ли скачался файл
     if [ -f "$temp_file" ]; then
         echo ""
         if command -v mpv &> /dev/null; then
